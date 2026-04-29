@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西安面馆 | Xi'an Noodle House · Irvine</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #8B1A1A;
+    --red-light: #C0392B;
+    --gold: #B8860B;
+    --gold-light: #DAA520;
+    --cream: #FAF6F0;
+    --dark: #1A1208;
+    --text: #2C1810;
+    --text-muted: #6B4C3B;
+    --border: rgba(139,26,26,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(250,246,240,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.2rem;
+    color: var(--red);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 2rem 4rem;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(139,26,26,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(184,134,11,0.06) 0%, transparent 60%),
+      var(--cream);
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--red) 0, var(--red) 1px,
+      transparent 0, transparent 50%
+    );
+    background-size: 20px 20px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-light);
+    padding: 0.35rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--red);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, var(--red), var(--gold));
+    margin: 1.5rem auto;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 400px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: #FAF6F0;
+    padding: 0.85rem 2rem;
+    border: none;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--red-light); }
+
+  .btn-secondary {
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 0.85rem 2rem;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover { background: var(--red); color: var(--cream); }
+
+  /* SECTION COMMON */
+  section { padding: 5rem 2rem; }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ABOUT */
+  .about {
+    background: white;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    background: var(--cream);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--red);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* MENU */
+  .menu { background: var(--cream); }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .menu-card {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+  }
+
+  .menu-card:hover {
+    border-color: var(--red);
+    transform: translateY(-2px);
+  }
+
+  .menu-card-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .menu-card h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+
+  .menu-card .english {
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .menu-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .menu-card .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .menu-card .spicy {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-size: 0.75rem;
+    color: var(--red-light);
+  }
+
+  /* HOURS & LOCATION */
+  .info {
+    background: var(--dark);
+    color: var(--cream);
+  }
+
+  .info .section-title { color: var(--gold-light); }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+  }
+
+  .info-block h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.88rem;
+    color: rgba(250,246,240,0.75);
+  }
+
+  .hours-row.today { color: var(--gold-light); font-weight: 500; }
+
+  .address-line {
+    font-size: 0.9rem;
+    color: rgba(250,246,240,0.75);
+    margin-bottom: 0.5rem;
+  }
+
+  .map-placeholder {
+    margin-top: 1.25rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(250,246,240,0.3);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #0E0A04;
+    color: rgba(250,246,240,0.4);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+
+  footer span { color: var(--gold); }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .about-inner, .info-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">西安面馆</div>
+  <ul class="nav-links">
+    <li><a href="#about">关于我们</a></li>
+    <li><a href="#menu">菜单</a></li>
+    <li><a href="#info">地址时间</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div style="position:relative; z-index:1;">
+    <span class="hero-badge">Irvine · 尔湾 · 正宗陕西风味</span>
+    <h1>西安面馆</h1>
+    <h2>Xi'an Noodle House</h2>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">手工拉面，古城秘方，<br>带您品味千年古都的滋味</p>
+    <div class="hero-cta">
+      <a href="#menu" class="btn-primary">查看菜单</a>
+      <a href="#info" class="btn-secondary">联系我们</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container about-inner">
+    <div class="about-text">
+      <span class="section-label">Our Story · 我们的故事</span>
+      <h2 class="section-title">西安古城的味道<br>在尔湾重生</h2>
+      <p>西安面馆由陕西家庭创办，秉承三代传承的古法配方，用最新鲜的食材，每日手工制作面条。</p>
+      <p>从biang biang面到羊肉泡馍，每一道菜都承载着千年古都的饮食文化，让您在尔湾也能感受正宗的西北风味。</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <span class="stat-number">3</span>
+        <span class="stat-label">三代传承</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">手工现做</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">20+</span>
+        <span class="stat-label">特色菜品</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">每日</span>
+        <span class="stat-label">新鲜备料</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="container">
+    <span class="section-label">Signature Dishes · 招牌菜</span>
+    <h2 class="section-title">经典西安风味</h2>
+
+    <div class="menu-grid">
+
+      <div class="menu-card">
+        <span class="spicy">🌶🌶🌶</span>
+        <span class="menu-card-tag">镇店之宝</span>
+        <h3>Biang Biang 面</h3>
+        <div class="english">Hand-pulled Belt Noodles</div>
+        <p>宽如皮带的手拉面，淋上油泼辣子，配以香醋和蒜泥，劲道爽滑，回味无穷。</p>
+        <span class="price">$14.99</span>
+      </div>
+
+      <div class="menu-card">
+        <span class="spicy">🌶</span>
+        <span class="menu-card-tag">人气推荐</span>
+        <h3>肉夹馍</h3>
+        <div class="english">Chinese Pulled Pork Burger</div>
+        <p>酥脆白吉馍夹入慢炖数小时的卤肉，肥而不腻，外酥里嫩，西安街头最经典的味道。</p>
+        <span class="price">$9.99</span>
+      </div>
+
+      <div class="menu-card">
+        <span class="menu-card-tag">暖心首选</span>
+        <h3>羊肉泡馍</h3>
+        <div class="english">Lamb Soup with Bread</div>
+        <p>精选羔羊肉慢火炖煮，汤底浓郁醇厚，搭配手掰馍块，是西安人冬日最爱的暖身美食。</p>
+        <span class="price">$17.99</span>
+      </div>
+
+      <div class="menu-card">
+        <span class="spicy">🌶🌶</span>
+        <span class="menu-card-tag">素食可选</span>
+        <h3>油泼面</h3>
+        <div class="english">Splashed Oil Noodles</div>
+        <p>手擀宽面煮熟后，铺上辣椒面和葱花，滚烫热油一泼，香气四溢，简单却最抚人心。</p>
+        <span class="price">$12.99</span>
+      </div>
+
+      <div class="menu-card">
+        <span class="menu-card-tag">小吃</span>
+        <h3>凉皮</h3>
+        <div class="english">Cold Rice Noodles</div>
+        <p>爽滑Q弹的米皮，配以黄瓜丝、面筋和秘制调料，酸辣开胃，夏日必点。</p>
+        <span class="price">$11.99</span>
+      </div>
+
+      <div class="menu-card">
+        <span class="spicy">🌶🌶</span>
+        <span class="menu-card-tag">特色汤面</span>
+        <h3>臊子面</h3>
+        <div class="english">Pork Topping Noodles</div>
+        <p>细长均匀的手擀面，浇上以五花肉、豆腐、木耳炖制的臊子汤，酸辣鲜香，是陕西人的家常最爱。</p>
+        <span class="price">$13.99</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info" id="info">
+  <div class="container">
+    <span class="section-label" style="color: rgba(218,165,32,0.7);">Visit Us · 来访我们</span>
+    <h2 class="section-title">营业时间 & 地址</h2>
+    <div class="info-grid">
+      <div class="info-block">
+        <h3>营业时间</h3>
+        <div class="hours-row"><span>周一 — 周四</span><span>11:00 AM – 9:00 PM</span></div>
+        <div class="hours-row"><span>周五</span><span>11:00 AM – 10:00 PM</span></div>
+        <div class="hours-row today"><span>周六（今天）</span><span>10:00 AM – 10:00 PM</span></div>
+        <div class="hours-row"><span>周日</span><span>10:00 AM – 9:00 PM</span></div>
+
+        <div style="margin-top: 2rem;">
+          <h3>联系方式</h3>
+          <p class="address-line">📞 (949) 555-0188</p>
+          <p class="address-line">✉️ info@xiannoodlehouse.com</p>
+          <p class="address-line" style="margin-top:0.5rem; font-size:0.78rem; opacity:0.5;">接受电话预订 · 欢迎大型团体</p>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <h3>餐厅地址</h3>
+        <p class="address-line">15555 Culver Dr, Suite 200</p>
+        <p class="address-line">Irvine, CA 92604</p>
+        <p class="address-line" style="margin-top:0.5rem; font-size:0.78rem; opacity:0.5;">近 Ranch 99 超市 · 免费停车</p>
+        <div class="map-placeholder">[ Google Map 嵌入 ]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <span>西安面馆 Xi'an Noodle House</span> · Irvine, CA · 保留所有权利</p>
+</footer>
+
+</body>
+</html>
