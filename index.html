@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老李家凉皮 | Lao Li's Cool Noodles · Irvine</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('n-LDz_5QD3f9bD7Tv');</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #2D5A27; --green-light: #4A8A42;
+    --gold: #B8860B; --gold-light: #DAA520;
+    --cream: #F8F5EE; --dark: #161A10;
+    --text: #1E2A18; --text-muted: #5A6B50;
+    --border: rgba(45,90,39,0.15);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: var(--cream); color: var(--text); line-height: 1.6; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(248,245,238,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Noto Serif SC', serif; font-size: 1.1rem; color: var(--green); }
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+  .lang-toggle { display: flex; align-items: center; background: var(--green); border-radius: 20px; padding: 3px; cursor: pointer; }
+  .lang-btn { padding: 0.25rem 0.75rem; border-radius: 16px; font-size: 0.75rem; font-weight: 500; transition: all 0.2s; color: rgba(255,255,255,0.6); }
+  .lang-btn.active { background: white; color: var(--green); }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 20px; letter-spacing: 0.05em; }
+  .status-badge.open { background: rgba(45,90,39,0.1); color: var(--green); }
+  .status-badge.closed { background: rgba(180,30,30,0.1); color: #B41E1E; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .status-badge.open .status-dot { background: var(--green); animation: pulse 1.5s infinite; }
+  .status-badge.closed .status-dot { background: #B41E1E; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: 6rem 2rem 4rem; background: radial-gradient(ellipse at 20% 50%, rgba(45,90,39,0.07) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(184,134,11,0.06) 0%, transparent 60%), var(--cream); }
+  .hero-pattern { position: absolute; inset: 0; opacity: 0.03; background-image: repeating-linear-gradient(45deg, var(--green) 0, var(--green) 1px, transparent 0, transparent 50%); background-size: 20px 20px; }
+  .hero-badge { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-light); padding: 0.35rem 1rem; border-radius: 2px; margin-bottom: 1rem; }
+  .hero h1 { font-family: 'Noto Serif SC', serif; font-size: clamp(2.8rem, 8vw, 5.5rem); color: var(--green); line-height: 1.1; margin-bottom: 0.5rem; }
+  .hero h2 { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.1rem, 3vw, 1.6rem); color: var(--text-muted); margin-bottom: 1rem; }
+  .hero-divider { width: 60px; height: 2px; background: linear-gradient(to right, var(--green), var(--gold)); margin: 1.2rem auto; }
+  .hero-desc { font-size: 1rem; color: var(--text-muted); max-width: 380px; margin: 0 auto 2rem; font-weight: 300; }
+  .hero-cta { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary { background: var(--green); color: #F8F5EE; padding: 0.85rem 2rem; border: none; font-family: 'Noto Sans SC', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; cursor: pointer; transition: background 0.2s; text-decoration: none; display: inline-block; }
+  .btn-primary:hover { background: var(--green-light); }
+  .btn-secondary { border: 1px solid var(--green); color: var(--green); padding: 0.85rem 2rem; font-family: 'Noto Sans SC', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; cursor: pointer; background: transparent; transition: all 0.2s; text-decoration: none; display: inline-block; }
+  .btn-secondary:hover { background: var(--green); color: var(--cream); }
+
+  section { padding: 5rem 2rem; }
+  .section-label { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; display: block; }
+  .section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--green); margin-bottom: 1rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .about { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-text p { color: var(--text-muted); margin-bottom: 1rem; font-weight: 300; line-height: 1.8; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .stat { text-align: center; padding: 2rem; border: 1px solid var(--border); background: var(--cream); }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--green); display: block; margin-bottom: 0.25rem; }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.1em; }
+
+  .menu { background: var(--cream); }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .menu-card { background: white; border: 1px solid var(--border); transition: border-color 0.2s, transform 0.2s; overflow: hidden; }
+  .menu-card:hover { border-color: var(--green); transform: translateY(-2px); }
+  .menu-card-img { width: 100%; height: 200px; object-fit: cover; display: block; background: #e8f0e5; }
+  .menu-card-body { padding: 1.5rem; }
+  .menu-card-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; display: block; }
+  .menu-card h3 { font-family: 'Noto Serif SC', serif; font-size: 1.15rem; color: var(--text); margin-bottom: 0.15rem; }
+  .menu-card .english { font-style: italic; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.75rem; font-family: 'Playfair Display', serif; }
+  .menu-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; font-weight: 300; margin-bottom: 1rem; }
+  .menu-card .price { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--green); font-weight: 700; }
+
+  .order { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .order-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .order-info p { color: var(--text-muted); font-weight: 300; line-height: 1.8; margin-bottom: 1rem; }
+  .wechat-box { margin-top: 1.5rem; padding: 1.5rem; border: 1px solid var(--border); background: var(--cream); display: flex; align-items: center; gap: 1rem; }
+  .wechat-qr { width: 80px; height: 80px; background: white; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 2rem; }
+  .wechat-text { font-size: 0.85rem; color: var(--text-muted); }
+  .wechat-text strong { display: block; color: var(--text); margin-bottom: 0.25rem; font-family: 'Noto Serif SC', serif; }
+
+  .order-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; }
+  .form-group input, .form-group select, .form-group textarea { padding: 0.75rem 1rem; border: 1px solid var(--border); background: var(--cream); font-family: 'Noto Sans SC', sans-serif; font-size: 0.9rem; color: var(--text); outline: none; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-submit { background: var(--green); color: white; border: none; padding: 0.9rem; font-family: 'Noto Sans SC', sans-serif; font-size: 0.9rem; letter-spacing: 0.1em; cursor: pointer; transition: background 0.2s; }
+  .form-submit:hover { background: var(--green-light); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-success { display: none; padding: 1rem; background: rgba(45,90,39,0.08); border: 1px solid var(--green); color: var(--green); font-size: 0.9rem; text-align: center; }
+  .form-error { display: none; padding: 1rem; background: rgba(180,30,30,0.08); border: 1px solid #B41E1E; color: #B41E1E; font-size: 0.9rem; text-align: center; margin-top: 0.5rem; }
+
+  .info { background: var(--dark); color: var(--cream); }
+  .info .section-title { color: var(--gold-light); }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; }
+  .info-block h3 { font-family: 'Noto Serif SC', serif; font-size: 1rem; color: var(--gold-light); margin-bottom: 1.25rem; }
+  .hours-row { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.88rem; color: rgba(248,245,238,0.75); }
+  .address-line { font-size: 0.9rem; color: rgba(248,245,238,0.75); margin-bottom: 0.5rem; }
+  .map-container { margin-top: 1.25rem; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
+  .map-container iframe { width: 100%; height: 200px; border: none; display: block; }
+
+  footer { background: #0A0D08; color: rgba(248,245,238,0.4); text-align: center; padding: 2rem; font-size: 0.78rem; }
+  footer span { color: var(--gold); }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .about-inner, .order-inner, .info-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" id="nav-logo">老李家凉皮</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" data-zh="关于我们" data-en="About">关于我们</a></li>
+      <li><a href="#menu" data-zh="菜单" data-en="Menu">菜单</a></li>
+      <li><a href="#order" data-zh="在线订餐" data-en="Order">在线订餐</a></li>
+      <li><a href="#info" data-zh="地址时间" data-en="Hours">地址时间</a></li>
+    </ul>
+    <div class="lang-toggle" onclick="toggleLang()">
+      <div class="lang-btn active" id="btn-zh">中文</div>
+      <div class="lang-btn" id="btn-en">EN</div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div style="position:relative; z-index:1;">
+    <div style="margin-bottom:1rem;" id="status-container"></div>
+    <span class="hero-badge" data-zh="Irvine · 尔湾 · 正宗陕西凉皮" data-en="Irvine · Authentic Shaanxi Cuisine">Irvine · 尔湾 · 正宗陕西凉皮</span>
+    <h1 id="hero-title">老李家凉皮</h1>
+    <h2>Lao Li's Cool Noodles</h2>
+    <div class="hero-divider"></div>
+    <p class="hero-desc" data-zh="爽滑Q弹，酸辣开胃，每日新鲜现做，只做最正宗的陕西味道" data-en="Silky, springy noodles with a tangy kick. Freshly made daily — the most authentic Shaanxi flavors in Irvine.">爽滑Q弹，酸辣开胃，每日新鲜现做，只做最正宗的陕西味道</p>
+    <div class="hero-cta">
+      <a href="#order" class="btn-primary" data-zh="立即订餐" data-en="Order Now">立即订餐</a>
+      <a href="#menu" class="btn-secondary" data-zh="查看菜单" data-en="View Menu">查看菜单</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container about-inner">
+    <div class="about-text">
+      <span class="section-label" data-zh="我们的故事" data-en="Our Story">我们的故事</span>
+      <h2 class="section-title" data-zh="老李家的味道，从西安带到尔湾" data-en="From Xi'an to Irvine">老李家的味道，从西安带到尔湾</h2>
+      <p data-zh="老李家凉皮由陕西人老李创办，用祖传配方和每日新鲜食材，手工制作最正宗的凉皮和肉夹馍。" data-en="Founded by a Shaanxi native using a generations-old family recipe and fresh daily ingredients to craft the most authentic cold noodles and pork sandwiches.">老李家凉皮由陕西人老李创办，用祖传配方和每日新鲜食材，手工制作最正宗的凉皮和肉夹馍。</p>
+      <p data-zh="不用添加剂，不走捷径，只做真材实料的陕西小吃。每一口都是家的味道。" data-en="No shortcuts, no additives — just real, honest Shaanxi street food. Every bite tastes like home.">不用添加剂，不走捷径，只做真材实料的陕西小吃。每一口都是家的味道。</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat"><span class="stat-number" data-zh="每日" data-en="Daily">每日</span><span class="stat-label" data-zh="新鲜现做" data-en="Fresh Made">新鲜现做</span></div>
+      <div class="stat"><span class="stat-number">0</span><span class="stat-label" data-zh="添加剂" data-en="Additives">添加剂</span></div>
+      <div class="stat"><span class="stat-number">100%</span><span class="stat-label" data-zh="祖传配方" data-en="Family Recipe">祖传配方</span></div>
+      <div class="stat"><span class="stat-number" data-zh="正宗" data-en="Auth.">正宗</span><span class="stat-label" data-zh="陕西风味" data-en="Shaanxi Flavor">陕西风味</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="container">
+    <span class="section-label" data-zh="招牌菜" data-en="Signature Dishes">招牌菜</span>
+    <h2 class="section-title" data-zh="老李家招牌" data-en="Our Signatures">老李家招牌</h2>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img class="menu-card-img" src="https://redhousespice.com/wp-content/uploads/2021/09/liang-pi-served-scaled.jpg" alt="凉皮" onerror="this.style.background='#e8f0e5'">
+        <div class="menu-card-body">
+          <span class="menu-card-tag" data-zh="镇店之宝" data-en="House Special">镇店之宝</span>
+          <h3 data-zh="招牌凉皮" data-en="Signature Cold Noodles">招牌凉皮</h3>
+          <div class="english">Cold Skin Noodles</div>
+          <p data-zh="Q弹爽滑的米皮，配以黄瓜丝、面筋，淋上老李家秘制酸辣汁，开胃爽口，每日限量现做。" data-en="Springy rice noodles with cucumber, gluten puffs, and Lao Li's signature spicy-tangy sauce. Made fresh daily in limited quantities.">Q弹爽滑的米皮，配以黄瓜丝、面筋，淋上老李家秘制酸辣汁，开胃爽口，每日限量现做。</p>
+          <span class="price">$10.99</span>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img class="menu-card-img" src="https://redhousespice.com/wp-content/uploads/2022/03/rou-jia-mo-scaled.jpg" alt="肉夹馍" onerror="this.style.background='#e8f0e5'">
+        <div class="menu-card-body">
+          <span class="menu-card-tag" data-zh="人气推荐" data-en="Most Popular">人气推荐</span>
+          <h3 data-zh="肉夹馍" data-en="Pork Sandwich">肉夹馍</h3>
+          <div class="english">Rou Jia Mo</div>
+          <p data-zh="现烤酥脆白吉馍，夹入慢炖数小时的秘制卤肉，肥而不腻，每口都是满足。" data-en="Freshly baked crispy flatbread filled with slow-braised seasoned pork. Rich, tender, and absolutely satisfying.">现烤酥脆白吉馍，夹入慢炖数小时的秘制卤肉，肥而不腻，每口都是满足。</p>
+          <span class="price">$8.99</span>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img class="menu-card-img" src="https://redhousespice.com/wp-content/uploads/2021/09/liang-pi-served-scaled.jpg" alt="套餐" onerror="this.style.background='#e8f0e5'" style="filter:brightness(0.8) hue-rotate(10deg)">
+        <div class="menu-card-body">
+          <span class="menu-card-tag" data-zh="套餐" data-en="Combo">套餐</span>
+          <h3 data-zh="凉皮 + 肉夹馍套餐" data-en="Noodles + Sandwich Combo">凉皮 + 肉夹馍套餐</h3>
+          <div class="english">Combo Special</div>
+          <p data-zh="招牌凉皮搭配肉夹馍，一冷一热，酸辣配醇香，是老李家最受欢迎的经典组合。" data-en="Cold noodles paired with a pork sandwich — the perfect balance of cool and savory. Our most beloved combo.">招牌凉皮搭配肉夹馍，一冷一热，酸辣配醇香，是老李家最受欢迎的经典组合。</p>
+          <span class="price">$16.99</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="order" id="order">
+  <div class="container order-inner">
+    <div class="order-info">
+      <span class="section-label" data-zh="在线订餐" data-en="Online Order">在线订餐</span>
+      <h2 class="section-title" data-zh="提前预订，到店即取" data-en="Order Ahead, Pick Up Ready">提前预订，到店即取</h2>
+      <p data-zh="填写表单后我们会电话确认您的订单。营业时间：每天 8:00 AM – 5:00 PM。" data-en="Fill out the form and we'll call to confirm your order. Hours: Daily 8:00 AM – 5:00 PM.">填写表单后我们会电话确认您的订单。营业时间：每天 8:00 AM – 5:00 PM。</p>
+      <div class="wechat-box">
+        <div class="wechat-qr">💬</div>
+        <div class="wechat-text">
+          <strong data-zh="微信订餐" data-en="WeChat Order">微信订餐</strong>
+          <span data-zh="搜索微信号：" data-en="Search WeChat ID:">搜索微信号：</span><br>
+          <strong style="color:var(--green); font-family:monospace;">laoli_irvine</strong>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="order-form" id="order-form">
+        <div class="form-group">
+          <label data-zh="您的姓名" data-en="Your Name">您的姓名</label>
+          <input type="text" id="f-name" placeholder="张三 / John Smith">
+        </div>
+        <div class="form-group">
+          <label data-zh="联系电话" data-en="Phone Number">联系电话</label>
+          <input type="tel" id="f-phone" placeholder="(949) 000-0000">
+        </div>
+        <div class="form-group">
+          <label data-zh="取餐时间" data-en="Pickup Time">取餐时间</label>
+          <input type="time" id="f-time" min="08:00" max="17:00">
+        </div>
+        <div class="form-group">
+          <label data-zh="选择菜品" data-en="Select Items">选择菜品</label>
+          <select id="f-item">
+            <option value="">请选择... / Please select...</option>
+            <option value="招牌凉皮 $10.99">招牌凉皮 $10.99 · Cold Noodles</option>
+            <option value="肉夹馍 $8.99">肉夹馍 $8.99 · Pork Sandwich</option>
+            <option value="凉皮+肉夹馍套餐 $16.99">套餐 $16.99 · Combo Special</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label data-zh="备注（辣度/特殊要求）" data-en="Notes (spice level / requests)">备注（辣度/特殊要求）</label>
+          <textarea id="f-note" placeholder="例如：少辣，不要香菜..."></textarea>
+        </div>
+        <button class="form-submit" id="submit-btn" onclick="submitOrder()" data-zh="提交订单" data-en="Place Order">提交订单</button>
+        <div class="form-error" id="form-error">❌ 提交失败，请直接致电 (888) 999-2220 订餐。</div>
+      </div>
+      <div class="form-success" id="form-success">
+        ✅ <span data-zh="订单已收到！我们会尽快致电确认，请保持电话畅通。" data-en="Order received! We'll call to confirm shortly. Please keep your phone available.">订单已收到！我们会尽快致电确认，请保持电话畅通。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info" id="info">
+  <div class="container">
+    <span class="section-label" style="color:rgba(218,165,32,0.7);" data-zh="来访我们" data-en="Visit Us">来访我们</span>
+    <h2 class="section-title" data-zh="营业时间 & 地址" data-en="Hours & Location">营业时间 & 地址</h2>
+    <div class="info-grid">
+      <div class="info-block">
+        <h3 data-zh="营业时间" data-en="Hours">营业时间</h3>
+        <div class="hours-row"><span data-zh="周一 — 周日" data-en="Mon — Sun">周一 — 周日</span><span>8:00 AM – 5:00 PM</span></div>
+        <div style="margin-top:2rem;">
+          <h3 data-zh="联系方式" data-en="Contact">联系方式</h3>
+          <p class="address-line">📞 (888) 999-2220</p>
+          <p class="address-line">💬 WeChat: laoli_irvine</p>
+          <p class="address-line" style="margin-top:0.5rem;font-size:0.78rem;opacity:0.5;" data-zh="欢迎电话或微信订餐" data-en="Call or WeChat to order">欢迎电话或微信订餐</p>
+        </div>
+      </div>
+      <div class="info-block">
+        <h3 data-zh="餐厅地址" data-en="Address">餐厅地址</h3>
+        <p class="address-line">Irvine, CA</p>
+        <p class="address-line" style="font-size:0.78rem;opacity:0.5;margin-bottom:0.75rem;" data-zh="具体地址请来电询问" data-en="Call for exact address">具体地址请来电询问</p>
+        <div class="map-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53440.85!2d-117.8311!3d33.6846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dcdee4bb89cc1b%3A0x1c5d6a31285c58c!2sIrvine%2C%20CA!5e0!3m2!1sen!2sus!4v1" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <span>老李家凉皮 Lao Li's Cool Noodles</span> · Irvine, CA</p>
+</footer>
+
+<script>
+  let currentLang = 'zh';
+
+  function updateStatus() {
+    const now = new Date();
+    const h = now.getHours(), m = now.getMinutes();
+    const open = (h > 8 || (h === 8 && m >= 0)) && h < 17;
+    const container = document.getElementById('status-container');
+    container.innerHTML = open
+      ? `<span class="status-badge open"><span class="status-dot"></span>${currentLang==='zh'?'营业中':'Open Now'}</span>`
+      : `<span class="status-badge closed"><span class="status-dot"></span>${currentLang==='zh'?'已打烊 · 8AM开始营业':'Closed · Opens at 8AM'}</span>`;
+  }
+  updateStatus();
+  setInterval(updateStatus, 60000);
+
+  function toggleLang() {
+    currentLang = currentLang === 'zh' ? 'en' : 'zh';
+    document.getElementById('btn-zh').classList.toggle('active', currentLang === 'zh');
+    document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+    document.querySelectorAll('[data-zh][data-en]').forEach(el => {
+      el.textContent = el.getAttribute('data-' + currentLang);
+    });
+    document.getElementById('nav-logo').textContent = currentLang === 'zh' ? '老李家凉皮' : "Lao Li's Noodles";
+    document.getElementById('hero-title').textContent = currentLang === 'zh' ? '老李家凉皮' : "Lao Li's Cool Noodles";
+    updateStatus();
+  }
+
+  function submitOrder() {
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const time = document.getElementById('f-time').value;
+    const item = document.getElementById('f-item').value;
+    const note = document.getElementById('f-note').value.trim();
+
+    if (!name || !phone || !item) {
+      alert(currentLang === 'zh' ? '请填写姓名、电话和菜品' : 'Please fill in name, phone, and item');
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'zh' ? '提交中...' : 'Sending...';
+
+    emailjs.send('service_4e6cjks', 'template_9klirqb', {
+      from_name: name,
+      phone: phone,
+      pickup_time: time || '未指定',
+      item: item,
+      notes: note || '无'
+    }).then(() => {
+      document.getElementById('order-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }).catch(() => {
+      btn.disabled = false;
+      btn.textContent = currentLang === 'zh' ? '提交订单' : 'Place Order';
+      document.getElementById('form-error').style.display = 'block';
+    });
+  }
+</script>
+</body>
+</html>
